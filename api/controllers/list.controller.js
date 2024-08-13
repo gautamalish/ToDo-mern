@@ -2,7 +2,7 @@ import ListModel from "../models/list.model.js";
 export const GetLists = async (req, res) => {
   try {
     const result = await ListModel.find();
-    res.status(200).json({ result });
+    res.status(200).json(result);
   } catch (err) {
     res.status(500).json(err.message);
   }
