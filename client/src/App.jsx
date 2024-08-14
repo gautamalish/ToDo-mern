@@ -7,7 +7,7 @@ function App() {
   return (
     <main className="h-screen flex flex-col">
       <Header displayForm={displayForm} setDisplayForm={setDisplayForm} />
-      <List />
+      <List displayForm={displayForm} />
       {displayForm && (
         <CreateTodo displayForm={displayForm} setDisplayForm={setDisplayForm} />
       )}

@@ -8,7 +8,7 @@ import {
 const router = Router();
 
 router.get("/", GetLists);
-router.post("/add", PostList);
+router.post("/create", PostList);
 router.delete("/delete/:id", DeleteList);
 router.patch("/update/:id", UpdateList);
 export default router;
