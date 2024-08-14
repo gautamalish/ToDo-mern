@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
-const List = () => {
+const List = ({ displayForm }) => {
   const [list, setList] = useState([]);
   const [error, setError] = useState("");
 
@@ -21,7 +21,21 @@ const List = () => {
   };
   useEffect(() => {
     getAllList();
-  }, []);
+  }, [displayForm]);
+
+  const deleteList = async (id) => {
+    const response = await fetch(`http://localhost:3000/delete/:${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const result = await response.json();
+    if (!response) {
+      setError(result.error);
+    }
+    getAllList();
+  };
   return (
     <section className="bg-amber-100 grow">
       <div className="m-auto p-3 w-fit">
@@ -31,7 +45,7 @@ const List = () => {
         {list.map((item) => {
           return (
             <div
-              className="w-11/12 m-auto bg-blue-400 p-3 rounded-md flex justify-between items-center max-sm:w-full"
+              className="w-11/12 m-auto bg-blue-400 p-3 rounded-md flex justify-between items-center max-sm:w-full mt-2"
               key={item._id}
             >
               <div>
@@ -40,7 +54,11 @@ const List = () => {
               </div>
               <div className="flex gap-2">
                 <FaEdit size={25} className="cursor-pointer" />
-                <MdDelete size={25} className="cursor-pointer" />
+                <MdDelete
+                  size={25}
+                  className="cursor-pointer"
+                  onClick={() => deleteList(item.id)}
+                />
               </div>
             </div>
           );
