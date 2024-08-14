@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
-
+import Swal from "sweetalert2";
 const CreateTodo = ({ setDisplayForm, displayForm }) => {
   const [error, setError] = useState("");
   const modelRef = useRef(null);
@@ -40,6 +40,11 @@ const CreateTodo = ({ setDisplayForm, displayForm }) => {
       return;
     }
     if (response.ok) {
+      Swal.fire({
+        title: "Added New Todo?",
+        text: "You added a new Todo",
+        icon: "success",
+      });
       setError("");
       setFormData({ title: "", description: "" });
       setDisplayForm(false);

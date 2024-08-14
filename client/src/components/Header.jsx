@@ -1,5 +1,5 @@
 import React from "react";
-
+import Swal from "sweetalert2";
 const Header = ({ setDisplayForm, displayForm }) => {
   return (
     <header className="flex justify-between bg-gray-200 p-3 items-center">
