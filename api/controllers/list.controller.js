@@ -29,7 +29,7 @@ export const DeleteList = async (req, res) => {
       res.status(404).json({ message: "List not found" });
     }
   } catch (err) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ message: err.message });
   }
 };
 
