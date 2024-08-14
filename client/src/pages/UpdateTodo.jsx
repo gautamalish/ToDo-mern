@@ -1,17 +1,34 @@
 import React, { useRef, useEffect, useState } from "react";
-import useParams from "react-router-dom";
-const UpdateTodo = ({ setUpdateForm, updateForm }) => {
+import Swal from "sweetalert2";
+const UpdateTodo = ({ setUpdateForm, updateForm, selectedTodoId }) => {
   const [error, setError] = useState("");
   const modelRef = useRef(null);
   const [formData, setFormData] = useState({ title: "", description: "" });
-  const { id } = useParams();
   const OnClickOutside = (e) => {
     if (!modelRef.current.contains(e.target)) {
       setFormData({ title: "", description: "" });
       setUpdateForm(false);
     }
   };
-
+  const getSingleTodo = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/get-one/${selectedTodoId}`
+      );
+      const result = await response.json();
+      if (!response.ok) {
+        setError(result.error);
+        return;
+      }
+      setFormData({ title: result.title, description: result.description });
+      setError("");
+    } catch (err) {
+      setError(err);
+    }
+  };
+  useEffect(() => {
+    getSingleTodo();
+  }, []);
   function handleChange(e) {
     setFormData({
       ...formData,
@@ -27,21 +44,29 @@ const UpdateTodo = ({ setUpdateForm, updateForm }) => {
     };
   }, [updateForm]);
 
-  async function handleSubmit() {
+  async function handleSubmit(e) {
     e.preventDefault();
-    const response = await fetch(`http://localhost:3000/update/:${id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
+    const response = await fetch(
+      `http://localhost:3000/update/${selectedTodoId}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      }
+    );
     const result = await response.json();
     if (!response.ok) {
       setError(result.error);
       return;
     }
     if (response.ok) {
+      Swal.fire({
+        title: "Updated",
+        text: "You updated the Todo!",
+        icon: "success",
+      });
       setError("");
       setFormData({ title: "", description: "" });
       setUpdateForm(false);

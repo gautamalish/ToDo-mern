@@ -32,7 +32,22 @@ export const DeleteList = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
-
+export const getSingleTodo = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const result = await ListModel.findById(id);
+    if (!result) {
+      return res.status(404).json({ error: "Todo not found" });
+    }
+    res.status(200).json(result);
+  } catch (err) {
+    console.log(err);
+    res
+      .status(500)
+      .json({ error: "Internal Server Error", message: err.message });
+  }
+};
+// Handling Update List
 export const UpdateList = async (req, res) => {
   const { id } = req.params;
   try {
