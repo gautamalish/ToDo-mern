@@ -13,7 +13,7 @@ const UpdateTodo = ({ setUpdateForm, updateForm, selectedTodoId }) => {
   const getSingleTodo = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3000/get-one/${selectedTodoId}`
+        `https://todo-backend-qulx.onrender.com/get-one/${selectedTodoId}`
       );
       const result = await response.json();
       if (!response.ok) {
