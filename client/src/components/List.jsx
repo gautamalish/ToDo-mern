@@ -66,10 +66,10 @@ const List = ({
         {list.map((item) => {
           return (
             <div
-              className="w-11/12 m-auto bg-blue-400 p-3 rounded-md flex justify-between items-center max-sm:w-full mt-2"
+              className="w-11/12 m-auto bg-blue-400 p-3 rounded-md flex gap-5 justify-between items-center max-sm:w-full mt-2"
               key={item._id}
             >
-              <div>
+              <div className="overflow-x-hidden">
                 <h3 className="text-xl">{item.title}</h3>
                 <p>{item.description}</p>
               </div>
