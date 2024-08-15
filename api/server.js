@@ -4,7 +4,7 @@ import ListRouter from "./routes/list.route.js";
 import mongoose from "mongoose";
 import cors from "cors";
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8000;
 app.use(cors());
 config();
 app.use(express.json());
