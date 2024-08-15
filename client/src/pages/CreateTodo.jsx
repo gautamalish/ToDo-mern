@@ -27,6 +27,7 @@ const CreateTodo = ({ setDisplayForm, displayForm }) => {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    setDisplayForm(false);
     const response = await fetch(`https://todo-backend-qulx.onrender.com/create`, {
       method: "POST",
       headers: {
