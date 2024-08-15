@@ -62,7 +62,7 @@ const List = ({
       <div className="m-auto p-3 w-fit">
         <h3 className="text-2xl font-bold text-red-400">Your Todos</h3>
       </div>
-      <div className="bg-green-200 w-2/5 m-auto max-sm:h-96 p-4 h-[40rem] overflow-y-auto max-sm:w-4/5">
+      <div className="bg-green-200 w-2/5 max-lg:w-3/4 max-xl:w-4/5 m-auto max-sm:h-[80vh] p-4 h-[80vh] overflow-y-auto max-sm:w-4/5">
         {list.map((item) => {
           return (
             <div
@@ -73,9 +73,10 @@ const List = ({
                 <h3 className="text-xl">{item.title}</h3>
                 <p>{item.description}</p>
               </div>
-              <div className="flex gap-2">
+              <div className="flex gap-2 max-sm:gap-4">
                 <FaEdit
-                  size={25}
+                  size={30}
+                  color="blue"
                   className="cursor-pointer"
                   onClick={() => {
                     setUpdateForm(true);
@@ -83,7 +84,8 @@ const List = ({
                   }}
                 />
                 <MdDelete
-                  size={25}
+                  size={30}
+                  color="rgba(248, 113, 113, var(--tw-bg-opacity))"
                   className="cursor-pointer"
                   onClick={() => deleteList(item._id)}
                 />
