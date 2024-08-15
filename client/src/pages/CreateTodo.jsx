@@ -27,7 +27,7 @@ const CreateTodo = ({ setDisplayForm, displayForm }) => {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    const response = await fetch(`http://localhost:3000/create`, {
+    const response = await fetch(`https://todo-backend-qulx.onrender.com/create`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
