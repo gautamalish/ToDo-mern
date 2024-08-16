@@ -2,10 +2,7 @@ import React, { useEffect, useState } from "react";
 import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import Swal from "sweetalert2";
-const URL =
-  process.env.NODE_ENV === "development"
-    ? import.meta.env.VITE_API_URL_DEV
-    : import.meta.env.VITE_API_URL_PROD;
+const URL = import.meta.env.VITE_API_URL_PROD;
 const List = ({
   displayForm,
   setUpdateForm,
