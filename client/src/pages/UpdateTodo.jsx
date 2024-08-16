@@ -1,5 +1,9 @@
 import React, { useRef, useEffect, useState } from "react";
 import Swal from "sweetalert2";
+const URL =
+  process.env.NODE_ENV === "development"
+    ? import.meta.env.VITE_API_URL_DEV
+    : import.meta.env.VITE_API_URL_PROD;
 const UpdateTodo = ({ setUpdateForm, updateForm, selectedTodoId }) => {
   const [error, setError] = useState("");
   const modelRef = useRef(null);
@@ -12,9 +16,7 @@ const UpdateTodo = ({ setUpdateForm, updateForm, selectedTodoId }) => {
   };
   const getSingleTodo = async () => {
     try {
-      const response = await fetch(
-        `https://todo-backend-qulx.onrender.com/get-one/${selectedTodoId}`
-      );
+      const response = await fetch(`${URL}/get-one/${selectedTodoId}`);
       const result = await response.json();
       if (!response.ok) {
         setError(result.error);
@@ -46,16 +48,13 @@ const UpdateTodo = ({ setUpdateForm, updateForm, selectedTodoId }) => {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    const response = await fetch(
-      `http://localhost:3000/update/${selectedTodoId}`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      }
-    );
+    const response = await fetch(`${URL}/update/${selectedTodoId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
     const result = await response.json();
     if (!response.ok) {
       setError(result.error);

@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import Swal from "sweetalert2";
-const URI = process.env.API_URL_PROD || process.env.API_URL_DEV;
+const URL =
+  process.env.NODE_ENV === "development"
+    ? import.meta.env.VITE_API_URL_DEV
+    : import.meta.env.VITE_API_URL_PROD;
 const List = ({
   displayForm,
   setUpdateForm,
@@ -15,7 +18,7 @@ const List = ({
   const getAllList = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`https://todo-backend-qulx.onrender.com`);
+      const response = await fetch(`${URL}`);
       const result = await response.json();
 
       if (!response.ok) {
@@ -47,7 +50,7 @@ const List = ({
     });
     if (confirmation.isConfirmed) {
       try {
-        const response = await fetch(`https://todo-backend-qulx.onrender.com/delete/${id}`, {
+        const response = await fetch(`${URL}/delete/${id}`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",

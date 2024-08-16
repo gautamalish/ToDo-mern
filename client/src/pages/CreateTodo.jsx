@@ -1,6 +1,12 @@
 import React, { useRef, useEffect, useState } from "react";
 import Swal from "sweetalert2";
+const URL =
+  process.env.NODE_ENV === "development"
+    ? import.meta.env.VITE_API_URL_DEV
+    : import.meta.env.VITE_API_URL_PROD;
+
 const CreateTodo = ({ setDisplayForm, displayForm }) => {
+  console.log(URL);
   const [error, setError] = useState("");
   const modelRef = useRef(null);
   const [formData, setFormData] = useState({ title: "", description: "" });
@@ -27,7 +33,7 @@ const CreateTodo = ({ setDisplayForm, displayForm }) => {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    const response = await fetch(`https://todo-backend-qulx.onrender.com/create`, {
+    const response = await fetch(`${URL}/create`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -50,9 +56,7 @@ const CreateTodo = ({ setDisplayForm, displayForm }) => {
       setDisplayForm(false);
     }
   }
-  useEffect(()=>{
-    
-  })
+  useEffect(() => {});
   return (
     <form
       className="absolute m-auto inset-0 bg-indigo-400 w-2/6 h-3/5 flex flex-col p-3 gap-3 rounded-xl max-sm:w-4/5 max-lg:w-3/4 max-xl:w-4/5"
