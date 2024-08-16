@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import Swal from "sweetalert2";
+const URI = process.env.API_URL_PROD || process.env.API_URL_DEV;
 const List = ({
   displayForm,
   setUpdateForm,
@@ -10,17 +11,22 @@ const List = ({
 }) => {
   const [list, setList] = useState([]);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const getAllList = async () => {
+    setLoading(true);
     try {
       const response = await fetch(`http://localhost:3000`);
       const result = await response.json();
 
       if (!response.ok) {
+        setLoading(false);
         setError(result.error);
         return;
       }
+      setLoading(false);
       setList(result);
     } catch (err) {
+      setLoading(false);
       setError(err);
     }
   };
@@ -62,7 +68,17 @@ const List = ({
       <div className="m-auto p-3 w-fit">
         <h3 className="text-2xl font-bold text-red-400">Your Todos</h3>
       </div>
-      <div className="bg-green-200 w-2/5 max-lg:w-3/4 max-xl:w-4/5 m-auto max-sm:h-[80vh] p-4 h-[80vh] overflow-y-auto max-sm:w-4/5">
+      <div className="bg-green-200 w-2/5 max-lg:w-3/4 max-xl:w-4/5 m-auto max-sm:h-[80vh] p-4 h-[80vh] overflow-y-auto max-sm:w-4/5 relative">
+        {loading && (
+          <p className="absolute inset-0 flex items-center justify-center">
+            Loading...
+          </p>
+        )}
+        {!list.length && !loading && (
+          <p className="absolute inset-0 flex items-center justify-center">
+            You do not have any ToDos. Create some.
+          </p>
+        )}
         {list.map((item) => {
           return (
             <div
