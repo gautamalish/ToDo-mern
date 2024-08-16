@@ -31,9 +31,7 @@ const List = ({
         return;
       }
       // setting the loading to false after retriving the data
-      setTimeout(() => {
-        setLoading(false);
-      }, 2000);
+      setLoading(false);
       // setting the list to the data acquired
       setList(result);
     } catch (err) {

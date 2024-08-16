@@ -55,6 +55,10 @@ const UpdateTodo = ({ setUpdateForm, updateForm, selectedTodoId }) => {
   // handling update
   async function handleSubmit(e) {
     e.preventDefault();
+    if (!formData.title || !formData.description) {
+      setError("Please fill up all the fields.");
+      return;
+    }
     const response = await fetch(`${URL}/update/${selectedTodoId}`, {
       method: "PATCH", //using pach method for updating
       headers: {
@@ -84,6 +88,11 @@ const UpdateTodo = ({ setUpdateForm, updateForm, selectedTodoId }) => {
       className="absolute m-auto inset-0 bg-indigo-400 w-2/6 h-3/5 flex flex-col p-3 gap-3 rounded-xl max-sm:w-4/5 max-lg:w-3/4 max-xl:w-4/5"
       ref={modelRef}
     >
+      {error && (
+        <div className="p-4 mb-2 text-md bg-red-50 text-red-800 rounded-lg">
+          <p>{error}</p>
+        </div>
+      )}
       <input
         type="text"
         placeholder="Title"

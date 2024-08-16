@@ -39,6 +39,11 @@ const CreateTodo = ({ setDisplayForm, displayForm }) => {
   // handling form submit
   async function handleSubmit(e) {
     e.preventDefault();
+    // form validation
+    if (!formData.title || !formData.description) {
+      setError("Please fill up all the fields.");
+      return;
+    }
     // fetching the create api from the backend
     const response = await fetch(`${URL}/create`, {
       method: "POST",
@@ -70,6 +75,11 @@ const CreateTodo = ({ setDisplayForm, displayForm }) => {
       className="absolute m-auto inset-0 bg-indigo-400 w-2/6 h-3/5 flex flex-col p-3 gap-3 rounded-xl max-sm:w-4/5 max-lg:w-3/4 max-xl:w-4/5"
       ref={modelRef}
     >
+      {error && (
+        <div className="p-4 mb-2 text-md bg-red-50 text-red-800 rounded-lg">
+          <p>{error}</p>
+        </div>
+      )}
       <input
         type="text"
         placeholder="Title"
