@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import Swal from "sweetalert2";
+// setting the url as per the environment we're in(development or production)
 const URL =
   import.meta.env.MODE === "development"
     ? import.meta.env.VITE_API_URL_DEV
@@ -10,12 +11,15 @@ const CreateTodo = ({ setDisplayForm, displayForm }) => {
   const [error, setError] = useState("");
   const modelRef = useRef(null);
   const [formData, setFormData] = useState({ title: "", description: "" });
+
+  // closing the create modal when clicked outside the modal
   const OnClickOutside = (e) => {
     if (!modelRef.current.contains(e.target)) {
       setDisplayForm(false);
     }
   };
 
+  // function to keep track of form data
   function handleChange(e) {
     setFormData({
       ...formData,
@@ -23,6 +27,7 @@ const CreateTodo = ({ setDisplayForm, displayForm }) => {
     });
   }
 
+  // running the mousedown event everytime the displayForm changes to check for outside click
   useEffect(() => {
     document.addEventListener("mousedown", OnClickOutside);
 
@@ -31,14 +36,16 @@ const CreateTodo = ({ setDisplayForm, displayForm }) => {
     };
   }, [displayForm]);
 
+  // handling form submit
   async function handleSubmit(e) {
     e.preventDefault();
+    // fetching the create api from the backend
     const response = await fetch(`${URL}/create`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(formData),
+      body: JSON.stringify(formData), //sending the data by stringfying
     });
     const result = await response.json();
     if (!response.ok) {
@@ -51,6 +58,7 @@ const CreateTodo = ({ setDisplayForm, displayForm }) => {
         text: "You added a new Todo",
         icon: "success",
       });
+      // setting everything to empty if response was okay
       setError("");
       setFormData({ title: "", description: "" });
       setDisplayForm(false);

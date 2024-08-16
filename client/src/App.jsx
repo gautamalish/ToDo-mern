@@ -1,8 +1,8 @@
 import { useState } from "react";
 import Header from "./components/Header";
-import List from "./components/List";
-import CreateTodo from "./pages/CreateTodo";
-import UpdateTodo from "./pages/UpdateTodo";
+import List from "./pages/List";
+import CreateTodo from "./components/CreateTodo";
+import UpdateTodo from "./components/UpdateTodo";
 function App() {
   const [displayForm, setDisplayForm] = useState(false);
   const [updateForm, setUpdateForm] = useState(false);
