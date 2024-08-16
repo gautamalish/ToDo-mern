@@ -15,7 +15,7 @@ const List = ({
   const getAllList = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`http://localhost:3000`);
+      const response = await fetch(`https://todo-backend-qulx.onrender.com`);
       const result = await response.json();
 
       if (!response.ok) {
@@ -47,7 +47,7 @@ const List = ({
     });
     if (confirmation.isConfirmed) {
       try {
-        const response = await fetch(`http://localhost:3000/delete/${id}`, {
+        const response = await fetch(`https://todo-backend-qulx.onrender.com/delete/${id}`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",

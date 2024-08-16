@@ -27,7 +27,7 @@ const CreateTodo = ({ setDisplayForm, displayForm }) => {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    const response = await fetch(`http://localhost:3000/create`, {
+    const response = await fetch(`https://todo-backend-qulx.onrender.com/create`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -50,6 +50,9 @@ const CreateTodo = ({ setDisplayForm, displayForm }) => {
       setDisplayForm(false);
     }
   }
+  useEffect(()=>{
+    
+  })
   return (
     <form
       className="absolute m-auto inset-0 bg-indigo-400 w-2/6 h-3/5 flex flex-col p-3 gap-3 rounded-xl max-sm:w-4/5 max-lg:w-3/4 max-xl:w-4/5"
