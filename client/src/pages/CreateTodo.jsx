@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import Swal from "sweetalert2";
 const URL =
-  process.env.NODE_ENV === "development"
+  import.meta.env.MODE === "development"
     ? import.meta.env.VITE_API_URL_DEV
     : import.meta.env.VITE_API_URL_PROD;
 
