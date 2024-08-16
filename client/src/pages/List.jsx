@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import Swal from "sweetalert2";
+// setting the url as per the environment we're in(development or production)
 const URL =
   import.meta.env.MODE === "development"
     ? import.meta.env.VITE_API_URL_DEV
@@ -12,44 +13,54 @@ const List = ({
   updateForm,
   setSelectedTodoId,
 }) => {
+  // some state variables
   const [list, setList] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const getAllList = async () => {
+    // setting the loading to true at the beginning of getting the list
     setLoading(true);
     try {
+      // fetching the data from backend
       const response = await fetch(`${URL}`);
       const result = await response.json();
-
+      // setting the loading to false and then setting the error if response is not ok
       if (!response.ok) {
         setLoading(false);
         setError(result.error);
         return;
       }
+      // setting the loading to false after retriving the data
       setLoading(false);
+      // setting the list to the data acquired
       setList(result);
     } catch (err) {
       setLoading(false);
       setError(err);
     }
   };
+  // calling getAllList when displayForm or updateForm changes
   useEffect(() => {
     getAllList();
   }, [displayForm, updateForm]);
 
+  // function for deleting a todo
   const deleteList = async (id) => {
+    // Using a swal modal
     const confirmation = await Swal.fire({
       icon: "warning",
       title: "Are you sure?",
-      text: "You wont/'t be able to revert this!",
+      text: "You wont/n't be able to revert this!",
       showCancelButton: true,
       confirmButtonColor: "red",
       cancelButtonColor: "blue",
       confirmButtonText: "Delete",
       cancelButtonText: "Cancel",
     });
+    // if user presses delete
     if (confirmation.isConfirmed) {
       try {
+        // fetching the delete api from backend
         const response = await fetch(`${URL}/delete/${id}`, {
           method: "DELETE",
           headers: {
@@ -60,6 +71,7 @@ const List = ({
         if (!response.ok) {
           setError(result.error);
         }
+        // getting all list again after deletion
         getAllList();
       } catch (err) {
         setError(err);
@@ -73,12 +85,12 @@ const List = ({
       </div>
       <div className="bg-green-200 w-2/5 max-lg:w-3/4 max-xl:w-4/5 m-auto max-sm:h-[80vh] p-4 h-[80vh] overflow-y-auto max-sm:w-4/5 relative">
         {loading && (
-          <p className="absolute inset-0 flex items-center justify-center">
+          <p className="absolute inset-0 flex items-center justify-center text-xl">
             Loading...
           </p>
         )}
         {!list.length && !loading && (
-          <p className="absolute inset-0 flex items-center justify-center">
+          <p className="absolute inset-0 flex items-center justify-center text-xl">
             You do not have any ToDos. Create some.
           </p>
         )}

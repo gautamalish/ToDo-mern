@@ -1,9 +1,11 @@
 import React, { useRef, useEffect, useState } from "react";
 import Swal from "sweetalert2";
+// setting the url as per the environment we're in(development or production)
 const URL =
   import.meta.env.MODE === "development"
     ? import.meta.env.VITE_API_URL_DEV
     : import.meta.env.VITE_API_URL_PROD;
+
 const UpdateTodo = ({ setUpdateForm, updateForm, selectedTodoId }) => {
   const [error, setError] = useState("");
   const modelRef = useRef(null);
@@ -14,6 +16,7 @@ const UpdateTodo = ({ setUpdateForm, updateForm, selectedTodoId }) => {
       setUpdateForm(false);
     }
   };
+  // function to get the data of a particular Todo
   const getSingleTodo = async () => {
     try {
       const response = await fetch(`${URL}/get-one/${selectedTodoId}`);
@@ -22,22 +25,25 @@ const UpdateTodo = ({ setUpdateForm, updateForm, selectedTodoId }) => {
         setError(result.error);
         return;
       }
+      // setting the formdata to the data from the response
       setFormData({ title: result.title, description: result.description });
       setError("");
     } catch (err) {
       setError(err);
     }
   };
+  // calling get single todo everytime the updateTodo component mounts
   useEffect(() => {
     getSingleTodo();
   }, []);
+  // handling form data changes
   function handleChange(e) {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
   }
-
+  // closing the update modal when clicked outside
   useEffect(() => {
     document.addEventListener("mousedown", OnClickOutside);
 
@@ -46,14 +52,15 @@ const UpdateTodo = ({ setUpdateForm, updateForm, selectedTodoId }) => {
     };
   }, [updateForm]);
 
+  // handling update
   async function handleSubmit(e) {
     e.preventDefault();
     const response = await fetch(`${URL}/update/${selectedTodoId}`, {
-      method: "PATCH",
+      method: "PATCH", //using pach method for updating
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(formData),
+      body: JSON.stringify(formData), //sending stringified formdata to the backend
     });
     const result = await response.json();
     if (!response.ok) {
@@ -66,6 +73,7 @@ const UpdateTodo = ({ setUpdateForm, updateForm, selectedTodoId }) => {
         text: "You updated the Todo!",
         icon: "success",
       });
+      // setting the error and formdata to empty string after updating
       setError("");
       setFormData({ title: "", description: "" });
       setUpdateForm(false);
