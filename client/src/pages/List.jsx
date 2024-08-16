@@ -31,7 +31,9 @@ const List = ({
         return;
       }
       // setting the loading to false after retriving the data
-      setLoading(false);
+      setTimeout(() => {
+        setLoading(false);
+      }, 2000);
       // setting the list to the data acquired
       setList(result);
     } catch (err) {
@@ -84,10 +86,15 @@ const List = ({
         <h3 className="text-2xl font-bold text-red-400">Your Todos</h3>
       </div>
       <div className="bg-green-200 w-2/5 max-lg:w-3/4 max-xl:w-4/5 m-auto max-sm:h-[80vh] p-4 h-[80vh] overflow-y-auto max-sm:w-4/5 relative">
+        {loading && list.length > 0 && (
+          <div className="absolute inset-0 flex items-center justify-center text-xl bg-gray-200 bg-opacity-40">
+            <div className="w-8 h-8 spinner-border animate-spin border-gray-500 border-4 border-t-transparent inline-block rounded-full"></div>
+          </div>
+        )}
         {loading && (
-          <p className="absolute inset-0 flex items-center justify-center text-xl">
-            Loading...
-          </p>
+          <div className="absolute inset-0 flex items-center justify-center text-xl">
+            <div className="w-8 h-8 spinner-border animate-spin border-gray-500 border-4 border-t-transparent inline-block rounded-full"></div>
+          </div>
         )}
         {!list.length && !loading && (
           <p className="absolute inset-0 flex items-center justify-center text-xl">
