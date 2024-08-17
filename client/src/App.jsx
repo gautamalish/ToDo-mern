@@ -15,7 +15,7 @@ function App() {
         <Route index path="/signin" element={<SignIn />} />
         <Route path="/" element={<Navigate to="/signin" replace />} />
         <Route
-          path="/"
+          path="/front"
           element={
             <FrontPage
               selectedTodoId={selectedTodoId}

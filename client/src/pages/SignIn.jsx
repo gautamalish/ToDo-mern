@@ -2,7 +2,9 @@ import React from "react";
 import todoImg from "../assets/todoImg.jpg";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 const SignIn = () => {
+  const navigate = useNavigate();
   return (
     <main className="bg-gray-200 h-screen">
       <section className="flex h-full gap-40">
@@ -36,7 +38,10 @@ const SignIn = () => {
             </div>
             <p className="ml-auto text-blue-700">Forgot Password?</p>
             <div className="m-auto">
-              <button className="bg-gray-700 text-white p-3 rounded-lg w-96 mt-5 hover:bg-gray-950 duration-200">
+              <button
+                className="bg-gray-700 text-white p-3 rounded-lg w-96 mt-5 hover:bg-gray-950 duration-200"
+                onClick={() => navigate("/front")}
+              >
                 Sign In
               </button>
               <p className="mt-4 flex justify-center">
