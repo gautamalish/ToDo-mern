@@ -94,9 +94,14 @@ const List = ({
             <div className="w-8 h-8 spinner-border animate-spin border-gray-500 border-4 border-t-transparent inline-block rounded-full"></div>
           </div>
         )}
-        {!list.length && !loading && (
-          <p className="absolute inset-0 flex items-center justify-center text-xl">
-            You do not have any ToDos. Create some.
+        {error && (
+          <div className="p-4 mb-2 text-md bg-red-50 text-red-800 rounded-lg">
+            <p>{error}</p>
+          </div>
+        )}
+        {!error && !list.length && !loading && (
+          <p className="absolute inset-0 flex items-center justify-center text-xl mx-5 break-words">
+            You have nothing left to do.
           </p>
         )}
         {list.map((item) => {
