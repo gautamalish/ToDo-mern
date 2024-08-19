@@ -1,8 +1,43 @@
-import React from "react";
+import React, { useState } from "react";
 import todoImg from "../assets/todoImg.jpg";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+const URL =
+  import.meta.env.MODE === "development"
+    ? import.meta.env.VITE_API_URL_DEV
+    : import.meta.env.VITE_API_URL_PROD;
 const SignUp = () => {
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+  function handleChange(e) {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  }
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const response = await fetch(`${URL}/signup`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+    const result = await response.json();
+    if (!response.ok) {
+      setError(result.error);
+      return;
+    }
+    navigate("/signin");
+    setFormData({ email: "", password: "", username: "" });
+  }
   return (
     <main className="bg-gray-200 h-screen">
       <section className="flex h-full gap-40">
@@ -15,23 +50,44 @@ const SignUp = () => {
         </div>
         <div className="mt-7 max-lg:m-auto w-1/4 max-xl:w-5/12 max-lg:w-3/4 ">
           <h2 className="text-3xl font-bold">Sign Up</h2>
-          <form className="flex flex-col gap-3 mt-5 w-full">
+          <form
+            className="flex flex-col gap-3 mt-5 w-full"
+            onSubmit={handleSubmit}
+          >
+            <div className="flex flex-col">
+              <label htmlFor="username">Username</label>
+              <input
+                type="text"
+                placeholder="Username"
+                id="username"
+                name="username"
+                className="p-2 rounded-md w-full indent-1"
+                value={formData.username}
+                onChange={handleChange}
+              />
+            </div>
             <div className="flex flex-col">
               <label htmlFor="email">Email</label>
               <input
                 type="text"
                 placeholder="Email"
                 id="email"
+                name="email"
                 className="p-2 rounded-md w-full indent-1"
+                value={formData.email}
+                onChange={handleChange}
               />
             </div>
             <div className="flex flex-col">
               <label htmlFor="email">Password</label>
               <input
-                type="text"
+                type="password"
                 placeholder="Password"
                 id="email"
+                name="password"
                 className="p-2 rounded-md w-full indent-1"
+                value={formData.password}
+                onChange={handleChange}
               />
             </div>
             <div className="m-auto w-full">

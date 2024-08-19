@@ -7,7 +7,6 @@ const URL =
     : import.meta.env.VITE_API_URL_PROD;
 
 const CreateTodo = ({ setDisplayForm, displayForm }) => {
-  console.log(URL);
   const [error, setError] = useState("");
   const modelRef = useRef(null);
   const [formData, setFormData] = useState({ title: "", description: "" });
