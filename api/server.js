@@ -1,6 +1,7 @@
 import express from "express";
 import { config } from "dotenv";
 import ListRouter from "./routes/list.route.js";
+import UserRouter from "./routes/user.route.js";
 import mongoose from "mongoose";
 import cors from "cors";
 config();
@@ -22,4 +23,5 @@ async function StartServer() {
   }
 }
 app.use("/", ListRouter);
+app.use("/", UserRouter);
 StartServer();
