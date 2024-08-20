@@ -24,7 +24,7 @@ export const CreateUser = async (req, res) => {
       { id: user._id, email, username },
       process.env.JWT_SECRET,
       {
-        expiresIn: "2hr",
+        expiresIn: "1hr",
       }
     );
     user.token = token;
@@ -32,5 +32,39 @@ export const CreateUser = async (req, res) => {
     res.status(201).json(user);
   } catch (err) {
     res.status(500).json(err.message);
+  }
+};
+
+export const loginUser = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    if (!(email && password)) {
+      res.status(400).json({ message: "Please fill up all the fields" });
+      return;
+    }
+    const user = await userModel.findOne({ email });
+    if (!user) {
+      res.status(400).json({ message: "User doesn't exist" });
+      return;
+    }
+    const comparison = await bcrypt.compare(password, user.password);
+    if (!comparison) {
+      res.status(400).send({ message: "Can't find the user." });
+      return;
+    } else if (comparison) {
+      const token = jwt.sign({ id: user._id, email }, process.env.JWT_SECRET, {
+        expiresIn: "1hr",
+      });
+      user.password = undefined;
+      res.cookie("token", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+        maxAge: 3600000, //1hour
+      });
+      res.status(200).json(user);
+    }
+  } catch (err) {
+    res.status(500).json({ message: "Error:", err });
   }
 };

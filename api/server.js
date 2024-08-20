@@ -3,12 +3,13 @@ import { config } from "dotenv";
 import ListRouter from "./routes/list.route.js";
 import UserRouter from "./routes/user.route.js";
 import mongoose from "mongoose";
+import cookieParser from "cookie-parser";
 import cors from "cors";
 config();
 const app = express();
 const PORT = process.env.PORT || 8000;
 app.use(cors());
-
+app.use(cookieParser());
 app.use(express.json());
 async function StartServer() {
   try {
