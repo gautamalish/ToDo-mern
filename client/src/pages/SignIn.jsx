@@ -4,11 +4,13 @@ import todoImg from "../assets/todoImg.jpg";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useMyContext } from "../context/myContext";
 const URL =
   import.meta.env.MODE === "development"
     ? import.meta.env.VITE_API_URL_DEV
     : import.meta.env.VITE_API_URL_PROD;
 const SignIn = () => {
+  const { loggedIn, setLoggedIn } = useMyContext();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
@@ -36,6 +38,7 @@ const SignIn = () => {
       console.log(result.error);
       return;
     }
+    setLoggedIn(true);
     navigate("/front");
   };
   return (

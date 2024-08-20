@@ -5,10 +5,12 @@ import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import FrontPage from "./pages/FrontPage";
 import { Navigate } from "react-router-dom";
+import { useMyContext } from "./context/myContext";
 function App() {
   const [displayForm, setDisplayForm] = useState(false);
   const [updateForm, setUpdateForm] = useState(false);
   const [selectedTodoId, setSelectedTodoId] = useState(null);
+  const { loggedIn, setLoggedIn } = useMyContext();
   return (
     <BrowserRouter>
       <Routes>
@@ -18,14 +20,18 @@ function App() {
         <Route
           path="/front"
           element={
-            <FrontPage
-              selectedTodoId={selectedTodoId}
-              displayForm={displayForm}
-              setUpdateForm={setUpdateForm}
-              setDisplayForm={setDisplayForm}
-              updateForm={updateForm}
-              setSelectedTodoId={setSelectedTodoId}
-            />
+            loggedIn ? (
+              <FrontPage
+                selectedTodoId={selectedTodoId}
+                displayForm={displayForm}
+                setUpdateForm={setUpdateForm}
+                setDisplayForm={setDisplayForm}
+                updateForm={updateForm}
+                setSelectedTodoId={setSelectedTodoId}
+              />
+            ) : (
+              <Navigate to="/signin" replace />
+            )
           }
         />
       </Routes>

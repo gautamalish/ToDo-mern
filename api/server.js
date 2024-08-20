@@ -8,7 +8,15 @@ import cors from "cors";
 config();
 const app = express();
 const PORT = process.env.PORT || 8000;
-app.use(cors());
+app.use(
+  cors({
+    origin:
+      process.env.NODE_ENV == "production"
+        ? "https://todo-frontend-l11j.onrender.com"
+        : "http://localhost:5173",
+    credentials: true, // Allow credentials (cookies) to be sent
+  })
+);
 app.use(cookieParser());
 app.use(express.json());
 async function StartServer() {
