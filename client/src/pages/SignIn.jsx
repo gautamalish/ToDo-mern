@@ -33,6 +33,7 @@ const SignIn = () => {
     const result = await response.json();
     if (!response.ok) {
       setError(result.error);
+      console.log(result.error);
       return;
     }
     navigate("/front");
@@ -63,11 +64,11 @@ const SignIn = () => {
               />
             </div>
             <div className="flex flex-col">
-              <label htmlFor="email">Password</label>
+              <label htmlFor="password">Password</label>
               <input
                 type="password"
                 placeholder="Password"
-                id="email"
+                id="password"
                 name="password"
                 className="p-2 rounded-md w-full indent-1"
                 value={formData.password}
