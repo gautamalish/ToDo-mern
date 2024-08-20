@@ -1,11 +1,42 @@
-import React from "react";
+import React, { useState } from "react";
 import { useEffect } from "react";
 import todoImg from "../assets/todoImg.jpg";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+const URL =
+  import.meta.env.MODE === "development"
+    ? import.meta.env.VITE_API_URL_DEV
+    : import.meta.env.VITE_API_URL_PROD;
 const SignIn = () => {
   const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const [error, setError] = useState("");
+  function handleChange(e) {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const response = await fetch(`${URL}/signin`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+    const result = await response.json();
+    if (!response.ok) {
+      setError(result.error);
+      return;
+    }
+    navigate("/front");
+  };
   return (
     <main className="bg-gray-200 h-screen">
       <section className="flex h-full gap-40">
@@ -26,22 +57,28 @@ const SignIn = () => {
                 placeholder="Email"
                 id="email"
                 className="p-2 rounded-md w-full indent-1"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
               />
             </div>
             <div className="flex flex-col">
               <label htmlFor="email">Password</label>
               <input
-                type="text"
+                type="password"
                 placeholder="Password"
                 id="email"
+                name="password"
                 className="p-2 rounded-md w-full indent-1"
+                value={formData.password}
+                onChange={handleChange}
               />
             </div>
             <p className="ml-auto text-blue-700">Forgot Password?</p>
             <div className="m-auto w-full">
               <button
                 className="bg-gray-700 text-white p-3 rounded-lg w-full mt-5 hover:bg-gray-950 duration-200"
-                onClick={() => navigate("/front")}
+                onClick={handleSubmit}
               >
                 Sign In
               </button>
