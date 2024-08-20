@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import todoImg from "../assets/todoImg.jpg";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast, Bounce } from "react-toastify";
 const URL =
   import.meta.env.MODE === "development"
     ? import.meta.env.VITE_API_URL_DEV
@@ -21,6 +22,7 @@ const SignUp = () => {
       [e.target.name]: e.target.value,
     });
   }
+
   async function handleSubmit(e) {
     e.preventDefault();
     const response = await fetch(`${URL}/signup`, {
@@ -35,11 +37,29 @@ const SignUp = () => {
       setError(result.error);
       return;
     }
-    navigate("/signin");
     setFormData({ email: "", password: "", username: "" });
+    toast.success(
+      "Created an account successfully. Redirecting to Sign in...",
+      {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      }
+    );
+    setTimeout(() => {
+      navigate("/signin");
+    }, 3000);
   }
+
   return (
     <main className="bg-gray-200 h-screen">
+      <ToastContainer />
       <section className="flex h-full gap-40">
         <div className=" ml-7 w-1/3 mb-7 mt-7 max-lg:mr-2 hidden lg:block">
           <img
