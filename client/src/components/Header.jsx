@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useMyContext } from "../context/myContext";
@@ -9,6 +9,7 @@ const URL =
 const Header = ({ setDisplayForm, displayForm }) => {
   const navigate = useNavigate();
   const { loggedIn, setLoggedIn } = useMyContext();
+  const [error, setError] = useState("");
   async function onLogout() {
     const confirmation = await Swal.fire({
       icon: "warning",
@@ -26,14 +27,22 @@ const Header = ({ setDisplayForm, displayForm }) => {
           method: "GET",
           credentials: "include",
         });
+        const result = await response.json();
         if (response.ok) {
           setLoggedIn(false);
           navigate("/signin");
         } else {
-          console.log("Failed to log out");
+          setError(result.error);
         }
-      } catch (error) {
-        console.log(error);
+      } catch (err) {
+        Swal.update({
+          icon: "error",
+          title: "Logout Failed",
+          text: error || "Something went wrong.",
+          confirmButtonColor: "red",
+          showCancelButton: false,
+          confirmButtonText: "Close",
+        });
       }
     }
   }
