@@ -16,6 +16,7 @@ const SignIn = () => {
     email: "",
     password: "",
   });
+  // state for error handling
   const [error, setError] = useState("");
   function handleChange(e) {
     setFormData({
@@ -23,8 +24,10 @@ const SignIn = () => {
       [e.target.name]: e.target.value,
     });
   }
+  // function that runs when signin is clicked
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // consuming the api from the backend
     const response = await fetch(`${URL}/signin`, {
       method: "POST",
       headers: {
@@ -32,10 +35,10 @@ const SignIn = () => {
       },
       body: JSON.stringify(formData),
     });
+    // converting the response to json format
     const result = await response.json();
     if (!response.ok) {
       setError(result.error);
-      console.log(result);
       return;
     }
     setLoggedIn(true);

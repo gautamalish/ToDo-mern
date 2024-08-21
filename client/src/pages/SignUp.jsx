@@ -8,6 +8,7 @@ const URL =
   import.meta.env.MODE === "development"
     ? import.meta.env.VITE_API_URL_DEV
     : import.meta.env.VITE_API_URL_PROD;
+
 const SignUp = () => {
   const [formData, setFormData] = useState({
     username: "",
@@ -22,9 +23,10 @@ const SignUp = () => {
       [e.target.name]: e.target.value,
     });
   }
-
+  // function that fires when signup button is clicked
   async function handleSubmit(e) {
     e.preventDefault();
+    // consuming the api
     const response = await fetch(`${URL}/signup`, {
       method: "POST",
       headers: {
@@ -32,11 +34,12 @@ const SignUp = () => {
       },
       body: JSON.stringify(formData),
     });
-    const result = await response.json();
+    const result = await response.json(); //converting the response to json
     if (!response.ok) {
       setError(result.error);
       return;
     }
+    // setting the form data to empty after successful signing up
     setFormData({ email: "", password: "", username: "" });
     toast.success(
       "Created an account successfully. Redirecting to Sign in...",
@@ -52,6 +55,7 @@ const SignUp = () => {
         transition: Bounce,
       }
     );
+    // taking few seconds to navigate to signin
     setTimeout(() => {
       navigate("/signin");
     }, 3000);

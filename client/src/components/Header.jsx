@@ -6,8 +6,10 @@ const URL =
   import.meta.env.MODE === "development"
     ? import.meta.env.VITE_API_URL_DEV
     : import.meta.env.VITE_API_URL_PROD;
+
 const Header = ({ setDisplayForm, displayForm }) => {
   const navigate = useNavigate();
+  // state to check if a user is logged in
   const { loggedIn, setLoggedIn } = useMyContext();
   const [error, setError] = useState("");
   async function onLogout() {
@@ -21,6 +23,7 @@ const Header = ({ setDisplayForm, displayForm }) => {
       confirmButtonText: "Logout",
       cancelButtonText: "Cancel",
     });
+    // checking if user confirmed the logout and them logging them out
     if (confirmation.isConfirmed) {
       try {
         const response = await fetch(`${URL}/logout`, {
