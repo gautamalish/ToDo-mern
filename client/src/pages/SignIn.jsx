@@ -35,7 +35,7 @@ const SignIn = () => {
     const result = await response.json();
     if (!response.ok) {
       setError(result.error);
-      console.log(result.error);
+      console.log(result);
       return;
     }
     setLoggedIn(true);
@@ -43,7 +43,6 @@ const SignIn = () => {
   };
   return (
     <main className="bg-gray-200 h-screen">
-      {error && <p>{error}</p>}
       <section className="flex h-full gap-40">
         <div className=" ml-7 w-1/3 mb-7 mt-7 max-md:mr-2 hidden lg:block">
           <img
@@ -93,6 +92,11 @@ const SignIn = () => {
                   <span className="text-blue-700">Sign up</span>
                 </Link>
               </p>
+              {error && (
+                <p className="text-red-900 bg-red-200 p-3 rounded-md mb-[-2rem] mt-1">
+                  {error}
+                </p>
+              )}
               <div className="flex w-full mt-12 items-center gap-3">
                 <span className=" grow h-0.5 bg-gray-500 inline-block"></span>
                 <p>Or</p>

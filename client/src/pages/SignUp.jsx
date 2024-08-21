@@ -120,6 +120,11 @@ const SignUp = () => {
                   <span className="text-blue-700">Sign in</span>
                 </Link>
               </p>
+              {error && (
+                <p className="bg-red-100 text-red-900 p-3 rounded-md mb-[-2rem] mt-1">
+                  {error}
+                </p>
+              )}
               <div className="flex w-full mt-12 items-center gap-3">
                 <span className=" grow h-0.5 bg-gray-500 inline-block"></span>
                 <p>Or</p>
