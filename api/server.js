@@ -17,6 +17,7 @@ app.use(
     credentials: true, // Allow credentials (cookies) to be sent
   })
 );
+
 app.use(cookieParser());
 app.use(express.json());
 async function StartServer() {

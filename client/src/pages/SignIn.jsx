@@ -43,6 +43,7 @@ const SignIn = () => {
   };
   return (
     <main className="bg-gray-200 h-screen">
+      {error && <p>{error}</p>}
       <section className="flex h-full gap-40">
         <div className=" ml-7 w-1/3 mb-7 mt-7 max-md:mr-2 hidden lg:block">
           <img
