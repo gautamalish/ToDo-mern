@@ -4,7 +4,9 @@ import ListRouter from "./routes/list.route.js";
 import UserRouter from "./routes/user.route.js";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
+import GoogleAuthRouter from "./routes/request.route.js";
 import cors from "cors";
+import { OAuth2Client } from "google-auth-library";
 config();
 const app = express();
 const PORT = process.env.PORT || 8000;
@@ -34,4 +36,5 @@ async function StartServer() {
 }
 app.use("/", ListRouter);
 app.use("/", UserRouter);
+app.use("/", GoogleAuthRouter);
 StartServer();
