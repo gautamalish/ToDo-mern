@@ -60,6 +60,14 @@ const SignUp = () => {
       navigate("/signin");
     }, 3000);
   }
+  async function handleGoogleSignUp(e) {
+    try {
+      e.preventDefault();
+      window.location.href = `${URL}/auth/google`;
+    } catch (error) {
+      console.error("Error during Google OAuth initiation:", error);
+    }
+  }
 
   return (
     <main className="bg-gray-200 h-screen">
@@ -74,10 +82,7 @@ const SignUp = () => {
         </div>
         <div className="mt-7 max-lg:m-auto w-1/4 max-xl:w-5/12 max-lg:w-3/4 ">
           <h2 className="text-3xl font-bold">Sign Up</h2>
-          <form
-            className="flex flex-col gap-3 mt-5 w-full"
-            onSubmit={handleSubmit}
-          >
+          <form className="flex flex-col gap-3 mt-5 w-full">
             <div className="flex flex-col">
               <label htmlFor="username">Username</label>
               <input
@@ -115,9 +120,14 @@ const SignUp = () => {
               />
             </div>
             <div className="m-auto w-full">
-              <button className="bg-gray-700 text-white p-3 rounded-lg w-full mt-7 hover:bg-gray-950 duration-200">
-                Sign Up
-              </button>
+              <Link to="/auth/google">
+                <button
+                  className="bg-gray-700 text-white p-3 rounded-lg w-full mt-7 hover:bg-gray-950 duration-200"
+                  onClick={handleSubmit}
+                >
+                  Sign Up
+                </button>
+              </Link>
               <p className="mt-4 flex justify-center">
                 <span>Already have an account?</span>
                 <Link to="/signin" className="underline">
@@ -134,7 +144,10 @@ const SignUp = () => {
                 <p>Or</p>
                 <span className=" grow h-0.5 bg-gray-500 inline-block"></span>
               </div>
-              <button className="bg-white text-black p-3 rounded-lg w-full mt-5 flex items-center justify-center gap-2">
+              <button
+                className="bg-white text-black p-3 rounded-lg w-full mt-5 flex items-center justify-center gap-2"
+                onClick={handleGoogleSignUp}
+              >
                 <FcGoogle size={30} /> Sign Up with Google
               </button>
             </div>

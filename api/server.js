@@ -4,12 +4,17 @@ import ListRouter from "./routes/list.route.js";
 import UserRouter from "./routes/user.route.js";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
-import GoogleAuthRouter from "./routes/request.route.js";
+import GoogleAuthRouter from "./routes/google-auth.route.js";
 import cors from "cors";
-import { OAuth2Client } from "google-auth-library";
+import passport from "passport";
 config();
+import "./controllers/google-oauth.controller.js";
+
 const app = express();
 const PORT = process.env.PORT || 8000;
+app.use(cookieParser());
+app.use(express.json());
+app.use(passport.initialize());
 app.use(
   cors({
     origin:
@@ -20,8 +25,6 @@ app.use(
   })
 );
 
-app.use(cookieParser());
-app.use(express.json());
 async function StartServer() {
   try {
     mongoose.connect(process.env.URI).then(() => {
