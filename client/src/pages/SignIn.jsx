@@ -44,6 +44,14 @@ const SignIn = () => {
     setLoggedIn(true);
     navigate("/front");
   };
+  function handleGoogleSignIn(e) {
+    try {
+      e.preventDefault();
+      window.location.href = `${URL}/auth/google`;
+    } catch (error) {
+      console.error("Error during Google OAuth initiation:", error);
+    }
+  }
   return (
     <main className="bg-gray-200 h-screen">
       <section className="flex h-full gap-40">
@@ -105,7 +113,10 @@ const SignIn = () => {
                 <p>Or</p>
                 <span className=" grow h-0.5 bg-gray-500 inline-block"></span>
               </div>
-              <button className="bg-white text-black p-3 rounded-lg w-full mt-5 flex items-center justify-center gap-2">
+              <button
+                className="bg-white text-black p-3 rounded-lg w-full mt-5 flex items-center justify-center gap-2"
+                onClick={handleGoogleSignIn}
+              >
                 <FcGoogle size={30} /> Sign In with Google
               </button>
             </div>
