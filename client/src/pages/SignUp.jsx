@@ -139,17 +139,6 @@ const SignUp = () => {
                   {error}
                 </p>
               )}
-              <div className="flex w-full mt-12 items-center gap-3">
-                <span className=" grow h-0.5 bg-gray-500 inline-block"></span>
-                <p>Or</p>
-                <span className=" grow h-0.5 bg-gray-500 inline-block"></span>
-              </div>
-              <button
-                className="bg-white text-black p-3 rounded-lg w-full mt-5 flex items-center justify-center gap-2"
-                onClick={handleGoogleSignUp}
-              >
-                <FcGoogle size={30} /> Sign Up with Google
-              </button>
             </div>
           </form>
         </div>
